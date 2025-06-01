@@ -1,0 +1,68 @@
+#!/usr/bin/env tclsh
+
+package require tcltest
+namespace import ::tcltest::*
+
+# Run tests in current interpreter (not subprocess)
+tcltest::configure -load {}
+
+# Show test results (pass/fail)
+tcltest::configure -verbose pass
+
+# Set script directory and source all .tcl files from ../src
+set script_dir [file dirname [file normalize [info script]]]
+set src_dir [file normalize "$script_dir/../src"]
+puts "src_dir: $src_dir"
+
+foreach file [glob -nocomplain -directory $src_dir *.tcl] {
+    puts "sourcing: $file"
+    source $file
+}
+
+##### Math Tests #####
+
+test add-1 {add 2 3} -body {
+    add 2 3
+} -result 5
+
+test add-2 {add -1 1} -body {
+    add -1 1
+} -result 0
+
+test sub-1 {sub 5 2} -body {
+    sub 5 2
+} -result 3
+
+test sub-2 {sub 2 5} -body {
+    sub 2 5
+} -result -3
+
+##### String Tests #####
+
+test capitalize-1 {capitalize "hello"} -body {
+    capitalize "hello"
+} -result "Hello"
+
+test capitalize-2 {capitalize "hElLo"} -body {
+    capitalize "hElLo"
+} -result "Hello"
+
+test capitalize-3 {capitalize "HELLO"} -body {
+    capitalize "HELLO"
+} -result "Hello"
+
+test reverse-1 {reverse "abcd"} -body {
+    reverse "abcd"
+} -result "dcba"
+
+test reverse-2 {reverse "madam"} -body {
+    reverse "madam"
+} -result "madam"
+
+test reverse-3 {reverse ""} -body {
+    reverse ""
+} -result ""
+
+# Run the tests (optional, auto-run at end of script usually)
+exit [runAllTests]
+
