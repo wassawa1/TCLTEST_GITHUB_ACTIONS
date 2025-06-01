@@ -1,0 +1,25 @@
+name: Run Tcl Tests on Push
+
+on:
+  push:
+    paths:
+      - '**.tcl'
+      - '**.test'
+
+jobs:
+  tcl-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Tcl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tcl
+
+      - name: Run Tcl tests
+        run: |
+          echo "Running Tcl tests"
+          tclsh tests/test_mylib.test
