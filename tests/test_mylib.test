@@ -3,6 +3,9 @@
 package require tcltest
 namespace import ::tcltest::*
 
+# Set up the test environment
+tcltest::configure -verbose bps ;# Set verbosity to show test progress
+
 # Run tests in current interpreter (not subprocess)
 tcltest::configure -load {}
 
